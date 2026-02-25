@@ -137,6 +137,16 @@
   gap: var(--space-1);
 }
 
+.results-page__skill-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+}
+
 .results-page__skill-tag {
   display: inline-flex;
   padding: 4px 10px;
@@ -145,6 +155,32 @@
   background-color: var(--color-accent-light);
   color: var(--color-accent);
   border-radius: var(--radius);
+}
+
+.results-page__skill-toggle {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.results-page__toggle-btn {
+  border: var(--border);
+  background-color: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.results-page__toggle-btn:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.results-page__toggle-btn.is-active {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+  border-color: var(--color-accent-light);
 }
 
 /* Round-wise Checklist */
@@ -229,4 +265,48 @@
   color: var(--color-text-secondary);
   line-height: var(--leading-loose);
   margin-bottom: var(--space-1);
+}
+
+/* Export */
+.results-page__export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.results-page__export-btn {
+  border: var(--border);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.results-page__export-btn:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.results-page__export-btn--primary {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+/* Action Next */
+.results-page__action-next {
+  background: linear-gradient(120deg, var(--color-surface), var(--color-bg));
+}
+
+.results-page__action-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.results-page__action-cta {
+  font-size: var(--text-base);
+  color: var(--color-accent);
+  font-weight: 500;
 }

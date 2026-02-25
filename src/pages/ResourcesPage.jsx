@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getHistory, getEntryById } from '../lib/storage';
+import { getEntryById, getHistory, updateEntry } from '../lib/storage';
 import './ResourcesPage.css';
 
 export default function ResourcesPage() {
   const [searchParams] = useSearchParams();
   const idParam = searchParams.get('id');
   const [entry, setEntry] = useState(null);
+  const [skillConfidenceMap, setSkillConfidenceMap] = useState({});
 
   useEffect(() => {
     const history = getHistory();
@@ -24,6 +25,140 @@ export default function ResourcesPage() {
     // Show the most recent entry
     setEntry(history[0]);
   }, [idParam]);
+
+  const allSkills = useMemo(() => {
+    if (!entry?.extractedSkills) return [];
+    return Object.values(entry.extractedSkills).flat();
+  }, [entry]);
+
+  const baseReadinessScore = useMemo(() => {
+    if (!entry) return 0;
+    return entry.baseReadinessScore ?? entry.readinessScore ?? 0;
+  }, [entry]);
+
+  const liveReadinessScore = useMemo(() => {
+    if (!entry) return 0;
+    let score = baseReadinessScore;
+    for (const skill of allSkills) {
+      const confidence = skillConfidenceMap[skill] || 'practice';
+      score += confidence === 'know' ? 2 : -2;
+    }
+    return Math.max(0, Math.min(100, score));
+  }, [allSkills, baseReadinessScore, entry, skillConfidenceMap]);
+
+  const weakSkills = useMemo(
+    () => allSkills.filter((skill) => (skillConfidenceMap[skill] || 'practice') === 'practice').slice(0, 3),
+    [allSkills, skillConfidenceMap],
+  );
+
+  useEffect(() => {
+    if (!entry) return;
+    const savedMap = entry.skillConfidenceMap || {};
+    const normalized = {};
+    for (const skill of allSkills) {
+      normalized[skill] = savedMap[skill] === 'know' ? 'know' : 'practice';
+    }
+    setSkillConfidenceMap(normalized);
+  }, [allSkills, entry]);
+
+  function persistEntryChanges(nextMap, nextScore) {
+    if (!entry?.id) return;
+    const updated = updateEntry(entry.id, {
+      baseReadinessScore,
+      readinessScore: nextScore,
+      skillConfidenceMap: nextMap,
+    });
+    if (updated) setEntry(updated);
+  }
+
+  function handleSkillConfidence(skill, value) {
+    const nextMap = {
+      ...skillConfidenceMap,
+      [skill]: value,
+    };
+
+    let nextScore = baseReadinessScore;
+    for (const s of allSkills) {
+      const confidence = nextMap[s] || 'practice';
+      nextScore += confidence === 'know' ? 2 : -2;
+    }
+    nextScore = Math.max(0, Math.min(100, nextScore));
+
+    setSkillConfidenceMap(nextMap);
+    persistEntryChanges(nextMap, nextScore);
+  }
+
+  async function copyText(label, text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      window.alert(`${label} copied to clipboard.`);
+    } catch {
+      window.alert(`Could not copy ${label}.`);
+    }
+  }
+
+  function formatPlanText() {
+    const lines = ['7-Day Preparation Plan'];
+    for (const day of entry.plan || []) {
+      lines.push('');
+      lines.push(`${day.day}: ${day.title}`);
+      for (const task of day.tasks || []) lines.push(`- ${task}`);
+    }
+    return lines.join('\n');
+  }
+
+  function formatChecklistText() {
+    const lines = ['Round-wise Preparation Checklist'];
+    for (const round of entry.checklist || []) {
+      lines.push('');
+      lines.push(round.round);
+      for (const item of round.items || []) lines.push(`- ${item}`);
+    }
+    return lines.join('\n');
+  }
+
+  function formatQuestionsText() {
+    const lines = ['10 Likely Interview Questions'];
+    (entry.questions || []).forEach((q, idx) => lines.push(`${idx + 1}. ${q}`));
+    return lines.join('\n');
+  }
+
+  function downloadAllAsTxt() {
+    const skillsText = Object.entries(entry.extractedSkills || {})
+      .map(([category, skills]) => `${category}: ${skills.join(', ')}`)
+      .join('\n');
+    const weakSkillsText = weakSkills.length > 0 ? weakSkills.join(', ') : 'None';
+
+    const text = [
+      'Placement Readiness Analysis',
+      `Company: ${entry.company || 'N/A'}`,
+      `Role: ${entry.role || 'N/A'}`,
+      `Date: ${new Date(entry.createdAt).toLocaleString()}`,
+      '',
+      `Readiness Score: ${liveReadinessScore}/100`,
+      '',
+      'Key Skills Extracted',
+      skillsText,
+      '',
+      formatChecklistText(),
+      '',
+      formatPlanText(),
+      '',
+      formatQuestionsText(),
+      '',
+      'Action Next',
+      `Top weak skills: ${weakSkillsText}`,
+      'Start Day 1 plan now.',
+    ].join('\n');
+
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `placement-readiness-${entry.id}.txt`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
 
   if (!entry) {
     return (
@@ -53,7 +188,7 @@ export default function ResourcesPage() {
       <section className="results-page__section">
         <h3>Readiness Score</h3>
         <div className="results-page__score-ring">
-          <ScoreCircle score={entry.readinessScore || 0} />
+          <ScoreCircle score={liveReadinessScore} />
         </div>
       </section>
 
@@ -66,11 +201,48 @@ export default function ResourcesPage() {
               <span className="results-page__cat-label">{cat}</span>
               <div className="results-page__tags">
                 {skills.map((s) => (
-                  <span key={s} className="results-page__skill-tag">{s}</span>
+                  <div key={s} className="results-page__skill-card">
+                    <span className="results-page__skill-tag">{s}</span>
+                    <div className="results-page__skill-toggle">
+                      <button
+                        type="button"
+                        className={`results-page__toggle-btn${(skillConfidenceMap[s] || 'practice') === 'know' ? ' is-active' : ''}`}
+                        onClick={() => handleSkillConfidence(s, 'know')}
+                      >
+                        I know this
+                      </button>
+                      <button
+                        type="button"
+                        className={`results-page__toggle-btn${(skillConfidenceMap[s] || 'practice') === 'practice' ? ' is-active' : ''}`}
+                        onClick={() => handleSkillConfidence(s, 'practice')}
+                      >
+                        Need practice
+                      </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Export Tools */}
+      <section className="results-page__section">
+        <h3>Export Tools</h3>
+        <div className="results-page__export-actions">
+          <button type="button" className="results-page__export-btn" onClick={() => copyText('7-day plan', formatPlanText())}>
+            Copy 7-day plan
+          </button>
+          <button type="button" className="results-page__export-btn" onClick={() => copyText('round checklist', formatChecklistText())}>
+            Copy round checklist
+          </button>
+          <button type="button" className="results-page__export-btn" onClick={() => copyText('10 questions', formatQuestionsText())}>
+            Copy 10 questions
+          </button>
+          <button type="button" className="results-page__export-btn results-page__export-btn--primary" onClick={downloadAllAsTxt}>
+            Download as TXT
+          </button>
         </div>
       </section>
 
@@ -117,6 +289,18 @@ export default function ResourcesPage() {
             <li key={i}>{q}</li>
           ))}
         </ol>
+      </section>
+
+      {/* Action Next */}
+      <section className="results-page__section results-page__action-next">
+        <h3>Action Next</h3>
+        <p className="results-page__action-text">
+          Top 3 weak skills:{' '}
+          <strong>
+            {weakSkills.length > 0 ? weakSkills.join(', ') : 'No weak skills marked'}
+          </strong>
+        </p>
+        <p className="results-page__action-cta">Start Day 1 plan now.</p>
       </section>
     </div>
   );

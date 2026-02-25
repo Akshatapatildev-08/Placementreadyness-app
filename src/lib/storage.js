@@ -50,6 +50,26 @@ export function getEntryById(id) {
 }
 
 /**
+ * Update an entry by id.
+ * @param {string} id
+ * @param {Object} updates
+ * @returns {Object|null}
+ */
+export function updateEntry(id, updates) {
+  const history = getHistory();
+  const index = history.findIndex((e) => e.id === id);
+  if (index === -1) return null;
+
+  const updated = {
+    ...history[index],
+    ...updates,
+  };
+  history[index] = updated;
+  writeHistory(history);
+  return updated;
+}
+
+/**
  * Delete an entry by id.
  * @param {string} id
  */
