@@ -1,0 +1,38 @@
+.prp-ship-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 720px;
+}
+
+.prp-ship-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.prp-ship-page__locked,
+.prp-ship-page__ready {
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.prp-ship-page__status {
+  font-size: var(--text-base);
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.prp-ship-page__detail {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.prp-ship-page__detail a {
+  color: var(--color-accent);
+  text-decoration: none;
+}

@@ -8,6 +8,8 @@ import PracticePage from './pages/PracticePage';
 import AssessmentsPage from './pages/AssessmentsPage';
 import ResourcesPage from './pages/ResourcesPage';
 import ProfilePage from './pages/ProfilePage';
+import PrpTestPage from './pages/PrpTestPage';
+import PrpShipPage from './pages/PrpShipPage';
 
 export default function App() {
   return (
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="/assessments" element={<AssessmentsPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/prp/07-test" element={<PrpTestPage />} />
+          <Route path="/prp/08-ship" element={<PrpShipPage />} />
         </Route>
 
         {/* Fallback */}
