@@ -1,0 +1,55 @@
+/* ReadinessScore.css */
+
+.readiness {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.readiness__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+  align-self: flex-start;
+}
+
+.readiness__ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) 0;
+}
+
+.readiness__svg {
+  transform: rotate(-90deg);
+}
+
+.readiness__progress {
+  transition: stroke-dashoffset 800ms ease-in-out;
+}
+
+.readiness__label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.readiness__number {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.readiness__text {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}

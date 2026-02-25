@@ -1,0 +1,71 @@
+/* WeeklyGoals.css */
+
+.weekly-goals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.weekly-goals__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.weekly-goals__stat {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  max-width: none;
+}
+
+.weekly-goals__stat strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.weekly-goals__bar {
+  height: 8px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.weekly-goals__bar-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: var(--radius);
+  transition: width var(--transition-normal);
+}
+
+.weekly-goals__days {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.weekly-goals__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.weekly-goals__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  border: var(--border);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.weekly-goals__dot--active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.weekly-goals__day-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}

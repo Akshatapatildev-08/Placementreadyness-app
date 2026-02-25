@@ -1,0 +1,63 @@
+/* UpcomingAssessments.css */
+
+.upcoming {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.upcoming__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.upcoming__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.upcoming__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background-color: var(--color-bg);
+  border-radius: var(--radius);
+  transition: background-color var(--transition-fast);
+}
+
+.upcoming__item:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.upcoming__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.upcoming__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.upcoming__title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.upcoming__time {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}

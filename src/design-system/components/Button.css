@@ -27,12 +27,12 @@
 }
 
 .btn--primary:hover {
-  background-color: #6B0000;
-  border-color: #6B0000;
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .btn--primary:active {
-  background-color: #520000;
+  background-color: hsl(245, 58%, 36%);
 }
 
 /* Secondary */

@@ -1,0 +1,114 @@
+/* AppShell.css */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+/* ── Sidebar ── */
+.app-shell__sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  border-right: var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) 0;
+}
+
+.app-shell__logo {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--color-accent);
+  padding: 0 var(--space-3) var(--space-3);
+  border-bottom: var(--border);
+  margin-bottom: var(--space-2);
+}
+
+.app-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 var(--space-1);
+}
+
+.app-shell__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 10px var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 450;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.app-shell__link:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.app-shell__link--active {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.app-shell__link--active:hover {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+/* ── Main ── */
+.app-shell__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ── Header ── */
+.app-shell__header {
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  background-color: var(--color-surface);
+  border-bottom: var(--border);
+  flex-shrink: 0;
+}
+
+.app-shell__header-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.app-shell__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.app-shell__avatar:hover {
+  background-color: var(--color-border);
+}
+
+/* ── Content ── */
+.app-shell__content {
+  flex: 1;
+  padding: var(--space-4);
+  overflow-y: auto;
+}

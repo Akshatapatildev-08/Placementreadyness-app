@@ -6,16 +6,18 @@
    ============================================================ */
 
 :root {
-  /* ---- Color System (max 4 colors) ---- */
+  /* ---- Color System ---- */
   --color-bg:        #F7F6F3;
   --color-text:      #111111;
-  --color-accent:    #8B0000;
+  --color-accent:    hsl(245, 58%, 51%);   /* indigo/purple primary */
+  --color-accent-hover: hsl(245, 58%, 42%);
+  --color-accent-light: hsl(245, 58%, 95%);
   --color-border:    #D4D2CC;
 
   /* Semantic */
   --color-success:   #4A7C59;
   --color-warning:   #A68B2C;
-  --color-error:     #8B0000;
+  --color-error:     #B91C1C;
 
   /* Surfaces */
   --color-surface:   #FFFFFF;
