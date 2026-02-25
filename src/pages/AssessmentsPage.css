@@ -82,6 +82,16 @@
   max-width: none;
 }
 
+.assessments-page__warning {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  max-width: none;
+}
+
 .assessments-page__btn {
   align-self: flex-start;
   display: inline-flex;

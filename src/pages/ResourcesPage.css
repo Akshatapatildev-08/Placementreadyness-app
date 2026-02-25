@@ -27,6 +27,16 @@
   max-width: none;
 }
 
+.results-page__warning {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+}
+
 /* Meta */
 .results-page__meta {
   display: flex;

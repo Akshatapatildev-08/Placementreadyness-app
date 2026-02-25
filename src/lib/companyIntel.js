@@ -62,10 +62,10 @@ export function inferCompanyIntel({ company, role, jdText }) {
 
 export function generateRoundMapping({ companyIntel, skillsFlat = [], extractedSkills = {} }) {
   const skills = skillsFlat.map((skill) => String(skill).toLowerCase());
-  const hasDSA = skills.includes('dsa') || skills.includes('algorithms') || Boolean(extractedSkills['Core CS']);
+  const hasDSA = skills.includes('dsa') || skills.includes('algorithms') || Boolean(extractedSkills['Core CS']) || Boolean(extractedSkills.coreCS);
   const hasWebStack = ['react', 'next.js', 'node.js', 'express', 'graphql', 'rest'].some((s) => skills.includes(s));
-  const hasCore = Boolean(extractedSkills['Core CS']);
-  const hasData = Boolean(extractedSkills['Data']);
+  const hasCore = Boolean(extractedSkills['Core CS']) || Boolean(extractedSkills.coreCS);
+  const hasData = Boolean(extractedSkills['Data']) || Boolean(extractedSkills.data);
 
   if (companyIntel?.sizeCategory?.startsWith('Enterprise')) {
     return [

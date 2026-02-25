@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getHistory, deleteEntry } from '../lib/storage';
+import { getHistory, getHistoryState, deleteEntry } from '../lib/storage';
 import { Trash2 } from 'lucide-react';
 import './PracticePage.css';
 
 export default function PracticePage() {
   const [history, setHistory] = useState([]);
+  const [hasCorruptedEntry, setHasCorruptedEntry] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     function loadHistory() {
-      setHistory(getHistory());
+      const state = getHistoryState();
+      setHistory(state.entries);
+      setHasCorruptedEntry(state.hadCorruptedEntry);
     }
 
     loadHistory();
@@ -20,7 +23,9 @@ export default function PracticePage() {
 
   function handleDelete(id) {
     deleteEntry(id);
-    setHistory(getHistory());
+    const state = getHistoryState();
+    setHistory(state.entries);
+    setHasCorruptedEntry(state.hadCorruptedEntry);
   }
 
   return (
@@ -29,6 +34,11 @@ export default function PracticePage() {
       <p className="history-page__subtitle">
         All your past JD analyses are stored locally. Click any entry to view the full results.
       </p>
+      {hasCorruptedEntry && (
+        <p className="history-page__warning">
+          One saved entry couldn&apos;t be loaded. Create a new analysis.
+        </p>
+      )}
 
       {history.length === 0 ? (
         <div className="history-page__empty">
@@ -54,7 +64,7 @@ export default function PracticePage() {
                 </span>
               </div>
               <div className="history-page__item-right">
-                <span className="history-page__item-score">{entry.readinessScore}</span>
+                <span className="history-page__item-score">{entry.finalScore}</span>
                 <button
                   className="history-page__delete-btn"
                   onClick={(e) => { e.stopPropagation(); handleDelete(entry.id); }}

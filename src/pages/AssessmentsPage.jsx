@@ -9,14 +9,20 @@ export default function AssessmentsPage() {
   const [role, setRole] = useState('');
   const [jdText, setJdText] = useState('');
   const [error, setError] = useState('');
+  const [warning, setWarning] = useState('');
 
   function handleAnalyze(e) {
     e.preventDefault();
     setError('');
+    setWarning('');
 
     if (!jdText.trim()) {
       setError('Please paste a job description to analyze.');
       return;
+    }
+
+    if (jdText.trim().length < 200) {
+      setWarning('This JD is too short to analyze deeply. Paste full JD for better output.');
     }
 
     const result = runAnalysis({ company, role, jdText });
@@ -64,11 +70,18 @@ export default function AssessmentsPage() {
             placeholder="Paste the full job description here..."
             value={jdText}
             onChange={(e) => setJdText(e.target.value)}
+            required
           />
           <span className="assessments-page__char-count">{jdText.length} characters</span>
+          {jdText.trim().length > 0 && jdText.trim().length < 200 && (
+            <p className="assessments-page__warning">
+              This JD is too short to analyze deeply. Paste full JD for better output.
+            </p>
+          )}
         </div>
 
         {error && <p className="assessments-page__error">{error}</p>}
+        {warning && <p className="assessments-page__warning">{warning}</p>}
 
         <button type="submit" className="assessments-page__btn">
           Analyze
