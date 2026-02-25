@@ -1,0 +1,42 @@
+/* Card.css */
+.card {
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.card__header {
+  margin-bottom: var(--space-2);
+}
+
+.card__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: var(--leading-tight);
+}
+
+.card__subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.card__body {
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.card__footer {
+  margin-top: var(--space-3);
+  display: flex;
+  gap: var(--space-1);
+}
+
+/* Compact variant */
+.card--compact {
+  padding: var(--space-2);
+}

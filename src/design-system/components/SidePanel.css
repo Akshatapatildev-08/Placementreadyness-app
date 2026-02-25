@@ -1,0 +1,31 @@
+/* SidePanel.css */
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.side-panel__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.side-panel__heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.side-panel__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.side-panel__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}

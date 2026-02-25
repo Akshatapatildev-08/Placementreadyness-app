@@ -1,0 +1,54 @@
+/* TopBar.css */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-height);
+  padding: 0 var(--space-4);
+  background-color: var(--color-surface);
+  border-bottom: var(--border);
+}
+
+.topbar__brand {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+}
+
+.topbar__progress {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.topbar__status {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  border: var(--border);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg);
+}
+
+.topbar__status--not-started {
+  color: var(--color-text-tertiary);
+}
+
+.topbar__status--in-progress {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.topbar__status--shipped {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}

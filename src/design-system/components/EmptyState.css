@@ -1,0 +1,30 @@
+/* EmptyState.css */
+.empty-state {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+  background-color: var(--color-surface);
+}
+
+.empty-state__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.empty-state__message {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-3);
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.empty-state__action {
+  display: inline-flex;
+}

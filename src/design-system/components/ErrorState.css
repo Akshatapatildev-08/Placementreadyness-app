@@ -1,0 +1,37 @@
+/* ErrorState.css */
+.error-state {
+  border: var(--border-width) solid var(--color-error);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  background-color: var(--color-surface);
+}
+
+.error-state__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-error);
+  margin-bottom: var(--space-1);
+}
+
+.error-state__message {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-2);
+}
+
+.error-state__fix {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: var(--leading-normal);
+  padding: var(--space-2);
+  background-color: var(--color-bg);
+  border-radius: var(--radius);
+}
+
+.error-state__fix-label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+}

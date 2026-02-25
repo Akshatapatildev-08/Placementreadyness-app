@@ -1,0 +1,18 @@
+/* WorkspaceLayout.css */
+.workspace-layout {
+  display: flex;
+  gap: var(--space-3);
+  padding: 0 var(--space-4) var(--space-4);
+  flex: 1;
+  min-height: 0;
+}
+
+.workspace-layout__main {
+  flex: 7;
+  min-width: 0;
+}
+
+.workspace-layout__side {
+  flex: 3;
+  min-width: 0;
+}
