@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getEntryById, getHistory, updateEntry } from '../lib/storage';
+import { generateRoundMapping, inferCompanyIntel } from '../lib/companyIntel';
 import './ResourcesPage.css';
 
 export default function ResourcesPage() {
@@ -50,6 +51,8 @@ export default function ResourcesPage() {
     () => allSkills.filter((skill) => (skillConfidenceMap[skill] || 'practice') === 'practice').slice(0, 3),
     [allSkills, skillConfidenceMap],
   );
+  const companyIntel = useMemo(() => entry?.companyIntel || null, [entry]);
+  const roundMapping = useMemo(() => entry?.roundMapping || [], [entry]);
 
   useEffect(() => {
     if (!entry) return;
@@ -59,6 +62,31 @@ export default function ResourcesPage() {
       normalized[skill] = savedMap[skill] === 'know' ? 'know' : 'practice';
     }
     setSkillConfidenceMap(normalized);
+  }, [allSkills, entry]);
+
+  useEffect(() => {
+    if (!entry || !entry.company) return;
+
+    if (entry.companyIntel && Array.isArray(entry.roundMapping) && entry.roundMapping.length > 0) {
+      return;
+    }
+
+    const generatedIntel = inferCompanyIntel({
+      company: entry.company,
+      role: entry.role,
+      jdText: entry.jdText,
+    });
+    const generatedRoundMapping = generateRoundMapping({
+      companyIntel: generatedIntel,
+      skillsFlat: allSkills,
+      extractedSkills: entry.extractedSkills || {},
+    });
+
+    const updated = updateEntry(entry.id, {
+      companyIntel: generatedIntel,
+      roundMapping: generatedRoundMapping,
+    });
+    if (updated) setEntry(updated);
   }, [allSkills, entry]);
 
   function persistEntryChanges(nextMap, nextScore) {
@@ -128,6 +156,9 @@ export default function ResourcesPage() {
       .map(([category, skills]) => `${category}: ${skills.join(', ')}`)
       .join('\n');
     const weakSkillsText = weakSkills.length > 0 ? weakSkills.join(', ') : 'None';
+    const roundFlowText = (roundMapping || [])
+      .map((round) => `${round.round}: ${round.title}\nWhy this round matters: ${round.why}`)
+      .join('\n\n');
 
     const text = [
       'Placement Readiness Analysis',
@@ -139,6 +170,16 @@ export default function ResourcesPage() {
       '',
       'Key Skills Extracted',
       skillsText,
+      '',
+      'Company Intel',
+      `Company: ${companyIntel?.companyName || 'N/A'}`,
+      `Industry: ${companyIntel?.industry || 'N/A'}`,
+      `Estimated size: ${companyIntel?.sizeCategory || 'N/A'}`,
+      `Typical Hiring Focus: ${companyIntel?.typicalHiringFocus || 'N/A'}`,
+      companyIntel?.modeNote || 'Demo Mode: Company intel generated heuristically.',
+      '',
+      'Round Mapping',
+      roundFlowText,
       '',
       formatChecklistText(),
       '',
@@ -226,6 +267,51 @@ export default function ResourcesPage() {
           ))}
         </div>
       </section>
+
+      {/* Company Intel */}
+      {entry.company && companyIntel && (
+        <section className="results-page__section">
+          <h3>Company Intel</h3>
+          <div className="results-page__intel-card">
+            <div className="results-page__intel-row">
+              <span>Company</span>
+              <strong>{companyIntel.companyName}</strong>
+            </div>
+            <div className="results-page__intel-row">
+              <span>Industry</span>
+              <strong>{companyIntel.industry}</strong>
+            </div>
+            <div className="results-page__intel-row">
+              <span>Estimated Size</span>
+              <strong>{companyIntel.sizeCategory}</strong>
+            </div>
+            <div className="results-page__intel-focus">
+              <h4>Typical Hiring Focus</h4>
+              <p>{companyIntel.typicalHiringFocus}</p>
+            </div>
+            <p className="results-page__intel-note">{companyIntel.modeNote}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Round Mapping */}
+      {entry.company && roundMapping.length > 0 && (
+        <section className="results-page__section">
+          <h3>Round Mapping</h3>
+          <div className="results-page__timeline">
+            {roundMapping.map((round) => (
+              <div key={`${round.round}-${round.title}`} className="results-page__timeline-item">
+                <div className="results-page__timeline-dot" />
+                <div className="results-page__timeline-content">
+                  <p className="results-page__timeline-round">{round.round}</p>
+                  <h4>{round.title}</h4>
+                  <p className="results-page__timeline-why">Why this round matters: {round.why}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Export Tools */}
       <section className="results-page__section">

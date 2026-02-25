@@ -267,6 +267,106 @@
   margin-bottom: var(--space-1);
 }
 
+/* Company Intel */
+.results-page__intel-card {
+  background-color: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+.results-page__intel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: 6px 0;
+  border-bottom: var(--border);
+}
+
+.results-page__intel-row:last-of-type {
+  border-bottom: none;
+}
+
+.results-page__intel-row strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.results-page__intel-focus {
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+}
+
+.results-page__intel-focus h4 {
+  margin-bottom: 4px;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.results-page__intel-focus p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.results-page__intel-note {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* Round Mapping */
+.results-page__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.results-page__timeline-item {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--space-2);
+}
+
+.results-page__timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 8px;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 0 4px var(--color-accent-light);
+}
+
+.results-page__timeline-content {
+  background-color: var(--color-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+.results-page__timeline-round {
+  margin-bottom: 4px;
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.results-page__timeline-content h4 {
+  font-size: var(--text-base);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.results-page__timeline-why {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
 /* Export */
 .results-page__export-actions {
   display: flex;

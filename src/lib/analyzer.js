@@ -7,6 +7,7 @@ import { calculateReadinessScore } from './readinessScore';
 import { generateChecklist } from './checklistGenerator';
 import { generatePlan } from './planGenerator';
 import { generateQuestions } from './questionGenerator';
+import { generateRoundMapping, inferCompanyIntel } from './companyIntel';
 import { saveEntry } from './storage';
 
 /**
@@ -27,6 +28,12 @@ export function runAnalysis({ company, role, jdText }) {
   const checklist = generateChecklist(extracted.flat, extracted.categories);
   const plan = generatePlan(extracted.flat, extracted.categories);
   const questions = generateQuestions(extracted.flat);
+  const companyIntel = inferCompanyIntel({ company, role, jdText });
+  const roundMapping = generateRoundMapping({
+    companyIntel,
+    skillsFlat: extracted.flat,
+    extractedSkills: extracted.categories,
+  });
 
   const entry = saveEntry({
     company: company.trim(),
@@ -37,6 +44,8 @@ export function runAnalysis({ company, role, jdText }) {
     checklist,
     questions,
     readinessScore,
+    companyIntel,
+    roundMapping,
   });
 
   return entry;
