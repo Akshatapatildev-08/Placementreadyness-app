@@ -1,8 +1,79 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { runAnalysis } from '../lib/analyzer';
+import './AssessmentsPage.css';
+
 export default function AssessmentsPage() {
+  const navigate = useNavigate();
+  const [company, setCompany] = useState('');
+  const [role, setRole] = useState('');
+  const [jdText, setJdText] = useState('');
+  const [error, setError] = useState('');
+
+  function handleAnalyze(e) {
+    e.preventDefault();
+    setError('');
+
+    if (!jdText.trim()) {
+      setError('Please paste a job description to analyze.');
+      return;
+    }
+
+    const result = runAnalysis({ company, role, jdText });
+    // Navigate to results with the entry id
+    navigate(`/resources?id=${result.id}`);
+  }
+
   return (
-    <div>
-      <h2>Assessments</h2>
-      <p>Mock tests and skill assessments will appear here.</p>
+    <div className="assessments-page">
+      <h2 className="assessments-page__title">JD Analyzer</h2>
+      <p className="assessments-page__subtitle">
+        Paste a job description below. The system will extract skills, generate a preparation plan,
+        round-wise checklist, likely interview questions, and a readiness score.
+      </p>
+
+      <form className="assessments-page__form" onSubmit={handleAnalyze}>
+        <div className="assessments-page__row">
+          <div className="assessments-page__field">
+            <label htmlFor="company">Company Name</label>
+            <input
+              id="company"
+              type="text"
+              placeholder="e.g. Google, Infosys, TCS"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+          </div>
+          <div className="assessments-page__field">
+            <label htmlFor="role">Role / Position</label>
+            <input
+              id="role"
+              type="text"
+              placeholder="e.g. Software Engineer, Frontend Developer"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="assessments-page__field">
+          <label htmlFor="jd-text">Job Description</label>
+          <textarea
+            id="jd-text"
+            rows={12}
+            placeholder="Paste the full job description here..."
+            value={jdText}
+            onChange={(e) => setJdText(e.target.value)}
+          />
+          <span className="assessments-page__char-count">{jdText.length} characters</span>
+        </div>
+
+        {error && <p className="assessments-page__error">{error}</p>}
+
+        <button type="submit" className="assessments-page__btn">
+          Analyze
+        </button>
+      </form>
     </div>
   );
 }

@@ -1,0 +1,110 @@
+/* PracticePage.css — History Page Styles */
+
+.history-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 720px;
+}
+
+.history-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.history-page__subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.history-page__empty {
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.history-page__empty p {
+  color: var(--color-text-secondary);
+  max-width: none;
+}
+
+.history-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.history-page__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.history-page__item:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.history-page__item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-page__item-company {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.history-page__item-role {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.history-page__item-date {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.history-page__item-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.history-page__item-score {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.history-page__delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius);
+  color: var(--color-text-tertiary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.history-page__delete-btn:hover {
+  color: var(--color-error);
+  background-color: var(--color-bg);
+}

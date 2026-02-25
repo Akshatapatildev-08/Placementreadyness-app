@@ -1,0 +1,111 @@
+/* AssessmentsPage.css */
+
+.assessments-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 720px;
+}
+
+.assessments-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.assessments-page__subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.assessments-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.assessments-page__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.assessments-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.assessments-page__field label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.assessments-page__field input,
+.assessments-page__field textarea {
+  width: 100%;
+  padding: 10px var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition-fast);
+  line-height: var(--leading-normal);
+}
+
+.assessments-page__field input:focus,
+.assessments-page__field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.assessments-page__field textarea {
+  resize: vertical;
+  min-height: 200px;
+}
+
+.assessments-page__char-count {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  align-self: flex-end;
+}
+
+.assessments-page__error {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  max-width: none;
+}
+
+.assessments-page__btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  color: #FFFFFF;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.assessments-page__btn:hover {
+  background-color: var(--color-accent-hover);
+}
+
+@media (max-width: 600px) {
+  .assessments-page__row {
+    grid-template-columns: 1fr;
+  }
+}
